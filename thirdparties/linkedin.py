@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv
 
-def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = True):
+def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = False):
     """scrape information from LinkedIn profiles,
     Manually scrape information from the LinkedIn profile."""
 
@@ -27,6 +27,11 @@ def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = True):
         )
 
     data = response.json().get("person")
+    
+    if data is None:
+        print("Warning: No profile data found. API may have failed or returned empty response.")
+        return {}
+    
     data = {
         k: v
         for k, v in data.items()
