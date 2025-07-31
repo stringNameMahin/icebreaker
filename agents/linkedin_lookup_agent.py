@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
-from langchain_ollama import ChatOllama
+# from langchain_ollama import ChatOllama
+from langchain.chat_models import init_chat_model
+# from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain_core.tools import Tool
 from langchain.agents import(
@@ -14,9 +16,9 @@ load_dotenv()
 
 
 def lookup(name: str) -> str:
-    llm = ChatOllama(
-        temperature=0,
-        model="Llama3",
+    llm = init_chat_model(
+        model="gemini-2.5-flash",
+        model_provider="google_genai"
     )
 
     template = """given the full name {name_of_person} I want you to get me a link to their Linkedin profile page.
