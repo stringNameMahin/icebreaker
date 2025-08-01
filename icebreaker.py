@@ -1,16 +1,13 @@
 import os
 from dotenv import load_dotenv
 from langchain.prompts.prompt import PromptTemplate
-# from langchain_openai import ChatOpenAI
-# from langchain_ollama import ChatOllama
-# from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains import LLMChain
 from thirdparties.linkedin import scrape_linkedin_profile
 from agents.linkedin_lookup_agent import lookup as linkedin_lookup_agent
 from langchain.chat_models import init_chat_model
-from output_parser import Summary_parser
+from output_parser import Summary_parser, Summary
 
-def icebreak_with(name: str) -> str:
+def icebreak_with(name: str) -> tuple[Summary, str]:
     linkedin_username = linkedin_lookup_agent(name=name)
     linkedin_url = scrape_linkedin_profile(linkedin_profile_url=linkedin_username)
     
@@ -33,9 +30,11 @@ def icebreak_with(name: str) -> str:
     linkedin_data = scrape_linkedin_profile(
         linkedin_profile_url = linkedin_username
     )
-    res = chain.invoke(input={"information": linkedin_data})
+    res:Summary = chain.invoke(input={"information": linkedin_data})
 
-    print(res) #Remove the .content for a more AI like output, .content just converts it to simple text like you would have if one used an LLM like chatgpt or gemini.
+    return res, linkedin_data.get("photoUrl")
+    
+    #print(res.content) #Remove the .content for a more AI like output, .content just converts it to simple text like you would have if one used an LLM like chatgpt or gemini.
 
 
 if __name__== "__main__":
