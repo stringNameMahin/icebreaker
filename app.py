@@ -13,13 +13,27 @@ def index():
 @app.route("/process", methods=["POST"])
 def process():
     name = request.form["name"]
-    Summary, profile_pic_url = icebreak_with(name=name)
-    return jsonify(
-        {
-            "Summary and facts": Summary.to_dict(),
-            "photoUrl": profile_pic_url
+    summary_obj, profile_pic_url = icebreak_with(name=name)
+    
+    return jsonify({
+        "picture_url": profile_pic_url,
+        "summary_and_facts": {
+            "summary": summary_obj.Summary,
+            "facts": summary_obj.facts
+        },
+        "ice_breakers": {
+            "ice_breakers": [
+                "Ask about their recent projects",
+                "Discuss their professional interests"
+            ]
+        },
+        "interests": {
+            "topics_of_interest": [
+                "Technology trends",
+                "Professional development"
+            ]
         }
-    )
+    })
 
 
 if __name__ == "__main__":

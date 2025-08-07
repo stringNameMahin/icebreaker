@@ -15,7 +15,7 @@ def icebreak_with(name: str) -> tuple[Summary, str]:
     1. A short summary
     2. two interesting facts about them
     \n{format_instructions}
-    """
+    """ 
 
     summary_prompt_template = PromptTemplate(input_variables=["information"], template=summary_template,
                                              partial_variables={"format_instructions": Summary_parser.get_format_instructions()} #partial vars is used specifically for using output parsing template, a premade schema.

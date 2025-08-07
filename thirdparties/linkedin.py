@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv
 
-def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = True):
+def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = False):
     """scrape information from LinkedIn profiles,
     Manually scrape information from the LinkedIn profile."""
 
